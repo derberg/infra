@@ -19,7 +19,7 @@ terraform init
 Then you can run the following command to apply changes:
 
 ```bash
-DIGITALOCEAN_TOKEN=<your-token> terraform apply
+terraform apply -var do_token=<your-token>
 ```
 
 ## Customize cluster properties
@@ -36,5 +36,5 @@ cluster_node_count_min = 5
 Then, apply the changes:
 
 ```bash
-DIGITALOCEAN_TOKEN=<your-token> terraform apply -var-file=main.tfvars
+terraform apply -var-file=main.tfvars -var do_token=<your-token>
 ```
