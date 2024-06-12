@@ -1,0 +1,25 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: {{ .Values.certificates.issuer.name }}
+  # Usually the namespace where the services that want to use certificates are located.
+  namespace: {{ .Values.certificates.issuer.namespace }}
+  annotations: 
+    helm.sh/hook: post-install
+    helm.sh/hook-weight: "100"
+spec:
+  acme:
+    # Let's Encrypt will use this to contact you about expiring
+    # certificates, and issues related to your account.
+    email: {{ .Values.certificates.issuer.acme.email }}
+    server: {{ .Values.certificates.issuer.acme.server }}
+    privateKeySecretRef:
+      # Secret resource that will be used to store the ACME account's private key, e.g. Let's Enctypt token. It's not a certificate.
+      # Make sure the name is unique and do not collision with any other secret name. 
+      # Note: This value should not be the same as Ingress secretName.
+      name: {{ .Values.certificates.issuer.acme.tokenSecretDestination }}
+    # Add a single challenge solver, HTTP01 using nginx
+    solvers:
+    - http01:
+        ingress:
+          class: nginx

@@ -1,0 +1,11 @@
+cert-manager:
+  installCRDs: true
+
+certificates:
+  issuer:
+    name: letsencrypt-prod
+    namespace: default
+    acme:
+      email: info@asyncapi.io
+      server: https://acme-v02.api.letsencrypt.org/directory
+      tokenSecretDestination: letsencrypt-prod
